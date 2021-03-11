@@ -1,24 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Gallery, Loading } from './components'
 import './App.css';
 
-class App extends React.Component {
-  state = {
-    pokemons: [],
-    index: 0,
-    isLoading: true,
-  }
+const App = () => {
+  const [pokemons, setPokemons] = useState([])
+  const [index, setIndex] = useState(0)
+  const [isLoading, setLoading] = useState(true)
 
-  componentDidMount() {
-    // fetches the first 9 first-gen pokemons :)
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=9')
-      .then(res => res.json())
-      .then(({ results }) => {
-        this.getPokemonDetails(results)
-      })
-  }
-
-  getPokemonStats = (pokemon) => {
+  const getPokemonStats = (pokemon) => {
     const { name, url } = pokemon
     const details = { name, url }
 
@@ -36,51 +25,58 @@ class App extends React.Component {
       })
   }
 
-  getPokemonDetails = (pokemonArray) => {
-    Promise.all([...pokemonArray.map((pokemon) => this.getPokemonStats(pokemon))])
+  const getPokemonDetails = (pokemonArray) => {
+    Promise.all([...pokemonArray.map((pokemon) => getPokemonStats(pokemon))])
       .then((data) => {
-        this.setState({ pokemons: data, isLoading: false })
+        setPokemons(data)
+        setLoading(false)
       })
   }
 
-  handleClick = (e, type) => {
+  const handleClick = (e, type) => {
     if (e) {
       e.preventDefault()
     }
 
-    const { index } = this.state
     if (type === 'next') {
-      this.setState({ index: index + 1 })
+      setIndex((index) => index + 1)
     } else {
-      this.setState({ index: index - 1 })
+      setIndex((index) => index - 1)
     }
   }
 
-  render() {
-    const { pokemons, index, isLoading } = this.state
-    const pokemon = pokemons[index]
-    const isFirst = index === 0
-    const isLast = index === pokemons.length - 1
+  useEffect(() => {
+    // fetches the first 9 first-gen pokemons :)
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=9')
+      .then(res => res.json())
+      .then(({ results }) => {
+        getPokemonDetails(results)
+      })
+  }, [])
 
-    return (
-      <main className="main">
-        <Button
-          label='previous'
-          type='prev'
-          isDisabled={isFirst}
-          handleClick={this.handleClick}
-        />
-        {isLoading && <Loading />}
-        {!isLoading && pokemon && (<Gallery pokemon={pokemon} />)}
-        <Button
-          label='next'
-          type='next'
-          isDisabled={isLast}
-          handleClick={this.handleClick}
-        />
-      </main>
-    );
-  }
+
+  const pokemon = pokemons[index]
+  const isFirst = index === 0
+  const isLast = index === pokemons.length - 1
+
+  return (
+    <main className="main">
+      <Button
+        label='previous'
+        type='prev'
+        isDisabled={isFirst}
+        handleClick={handleClick}
+      />
+      {isLoading && <Loading />}
+      {!isLoading && pokemon && (<Gallery pokemon={pokemon} />)}
+      <Button
+        label='next'
+        type='next'
+        isDisabled={isLast}
+        handleClick={handleClick}
+      />
+    </main>
+  );
 }
 
 export default App;
