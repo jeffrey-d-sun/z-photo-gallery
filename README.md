@@ -4,3 +4,7 @@ To play with the Pokedex (first nine from first-generation Pokemons) please foll
 2. install npm on your machine if you haven't already. [https://www.npmjs.com/get-npm]
 3. run `npm install`
 4. after npm installs successfully, run `npm start`
+
+
+Screenshot:
+![alt text](https://imgur.com/a/JytH5JO)
