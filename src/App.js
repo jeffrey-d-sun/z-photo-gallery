@@ -1,11 +1,12 @@
 import React from 'react'
-import { Button, Gallery } from './components'
+import { Button, Gallery, Loading } from './components'
 import './App.css';
 
 class App extends React.Component {
   state = {
     pokemons: [],
-    index: 0
+    index: 0,
+    isLoading: true,
   }
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class App extends React.Component {
   getPokemonDetails = (pokemonArray) => {
     Promise.all([...pokemonArray.map((pokemon) => this.getPokemonStats(pokemon))])
       .then((data) => {
-        this.setState({ pokemons: data })
+        this.setState({ pokemons: data, isLoading: false })
       })
   }
 
@@ -56,7 +57,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { pokemons, index } = this.state
+    const { pokemons, index, isLoading } = this.state
     const pokemon = pokemons[index]
     const isFirst = index === 0
     const isLast = index === pokemons.length - 1
@@ -69,7 +70,8 @@ class App extends React.Component {
           isDisabled={isFirst}
           handleClick={this.handleClick}
         />
-        {pokemon && (<Gallery pokemon={pokemon} />)}
+        {isLoading && <Loading />}
+        {!isLoading && pokemon && (<Gallery pokemon={pokemon} />)}
         <Button
           label='next'
           type='next'
