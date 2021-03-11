@@ -7,4 +7,4 @@ To play with the Pokedex (first nine from first-generation Pokemons) please foll
 
 
 Screenshot:
-![alt text](https://imgur.com/a/JytH5JO)
+![Screenshot](screenshot.png)
