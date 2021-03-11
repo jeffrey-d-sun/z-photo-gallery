@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { arrayOf, shapeOf, number, string } from 'prop-types'
 import MouseToolTip from 'react-sticky-mouse-tooltip'
 
 const Gallery = ({ pokemon }) => {
@@ -51,6 +52,19 @@ const Gallery = ({ pokemon }) => {
       </MouseToolTip>
     </div>
   );
+}
+
+Gallery.propTypes = {
+  pokemon: shapeOf({
+    id: number.isRequireq,
+    name: string.isRequired,
+    imgSrc: string.isRequired,
+    stats: shapeOf({
+      height: number.isRequired,
+      weight: number.isRequired,
+      types: arrayOf(string.isRequired)
+    }),
+  })
 }
 
 export default Gallery
