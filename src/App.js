@@ -5,7 +5,6 @@ import './App.css';
 class App extends React.Component {
   state = {
     pokemons: [],
-    gallery: [],
     index: 0
   }
 
@@ -26,6 +25,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(({ height, weight, types, id }) => {
         details.id = id
+        details.imgSrc = `https://pokeres.bastionbot.org/images/pokemon/${id}.png` 
         details.stats = {
           height,
           weight,
@@ -38,15 +38,8 @@ class App extends React.Component {
   getPokemonDetails = (pokemonArray) => {
     Promise.all([...pokemonArray.map((pokemon) => this.getPokemonStats(pokemon))])
       .then((data) => {
-        this.setState({
-          pokemons: data,
-          gallery: this.getPokemonImages(data)
-        })
+        this.setState({ pokemons: data })
       })
-  }
-
-  getPokemonImages = (pokemons) => {
-    return pokemons.map(({ id } ) => `https://pokeres.bastionbot.org/images/pokemon/${id}.png`)
   }
 
   handleClick = (e, type) => {
@@ -63,17 +56,26 @@ class App extends React.Component {
   }
 
   render() {
-    const { pokemons, index, gallery } = this.state
+    const { pokemons, index } = this.state
     const pokemon = pokemons[index]
-    const imgSrc = gallery[index]
     const isFirst = index === 0
-    const isLast = index === gallery.length - 1
+    const isLast = index === pokemons.length - 1
 
     return (
       <main className="main">
-        <Button label='previous' type='prev' isDisabled={isFirst} handleClick={this.handleClick} />
-        {pokemon && (<Gallery pokemon={pokemon} imgSrc={imgSrc} />)}
-        <Button label='next' type='next' isDisabled={isLast} handleClick={this.handleClick} />
+        <Button
+          label='previous'
+          type='prev'
+          isDisabled={isFirst}
+          handleClick={this.handleClick}
+        />
+        {pokemon && (<Gallery pokemon={pokemon} />)}
+        <Button
+          label='next'
+          type='next'
+          isDisabled={isLast}
+          handleClick={this.handleClick}
+        />
       </main>
     );
   }

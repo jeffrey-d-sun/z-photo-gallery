@@ -3,10 +3,11 @@ import { bool, func, string } from 'prop-types'
 
 const Button = ({ isDisabled, label, type, handleClick }) => (
   <button
-    className="button"
+    className={`button${isDisabled ? '-disabled' : ''}`}
     disabled={isDisabled}
-    onClick={(e) => handleClick(e, type)}>
-      {label}
+    onClick={(e) => handleClick(e, type)}
+  >
+      {isDisabled ? 'n/a' : label}
   </button>
 )
 

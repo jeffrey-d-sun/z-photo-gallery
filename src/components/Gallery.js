@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import MouseToolTip from 'react-sticky-mouse-tooltip'
 
-const Gallery = ({ pokemon, imgSrc }) => {
-  const { stats, name, id } = pokemon
+const Gallery = ({ pokemon }) => {
+  const { stats, name, id, imgSrc } = pokemon
   const { height, weight, types } = stats
   const [showToolTip, setToolTip] = useState(false)
 
@@ -43,12 +43,12 @@ const Gallery = ({ pokemon, imgSrc }) => {
           </figcaption>
       </figure>
       <MouseToolTip
-          visible={showToolTip}
-          offsetX={15}
-          offsetY={10}
-        >
-          <span className="learn-more">Click to learn more!</span>
-        </MouseToolTip>
+        visible={showToolTip}
+        offsetX={15}
+        offsetY={10}
+      >
+        <span className="learn-more">Click to learn more!</span>
+      </MouseToolTip>
     </div>
   );
 }
