@@ -11,6 +11,8 @@ const App = () => {
     const { name, url } = pokemon
     const details = { name, url }
 
+    // adding neccessary attributes of pokemon
+    // as first API does not provide such information
     return fetch(url)
       .then(res => res.json())
       .then(({ height, weight, types, id }) => {
