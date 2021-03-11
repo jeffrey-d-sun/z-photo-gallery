@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from './components'
 import './App.css';
 
 class App extends React.Component {
@@ -46,17 +47,34 @@ class App extends React.Component {
     return pokemons.map(({ id } ) => `https://pokeres.bastionbot.org/images/pokemon/${id}.png`)
   }
 
+  handleClick = (e, type) => {
+    if (e) {
+      e.preventDefault()
+    }
+
+    const { index } = this.state
+    if (type === 'next') {
+      this.setState({ index: index + 1 })
+    } else {
+      this.setState({ index: index - 1 })
+    }
+  }
+
   render() {
     const { pokemons, index, gallery } = this.state
     const pokemonName = pokemons[index]?.name
     const pokemonImgSrc = gallery[index]
+    const isFirst = index === 0
+    const isLast = index === gallery.length - 1
 
     return (
       <main>
+        <Button label='previous' type='prev' isDisabled={isFirst} handleClick={this.handleClick} />
         <div className="gallery-container">
-          {pokemonName}
+          <h2>{pokemonName}</h2>
           <img src={pokemonImgSrc} alt={`${pokemonName}`} />
         </div>
+        <Button label='next' type='next' isDisabled={isLast} handleClick={this.handleClick} />
       </main>
     );
   }
