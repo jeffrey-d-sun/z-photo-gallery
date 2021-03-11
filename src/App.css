@@ -1,7 +1,48 @@
-.App {
+.main {
+  display: flex;
+  height: 960px;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemon-name,
+img:hover,
+button:hover {
+  cursor: pointer;
+}
+
+button {
+  padding: 12px;
+  margin: 12px;
+  width: 120px;
   text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.gallery-container {
+  text-align: center;
+  border: 2px solid gray;
+  border-radius: 4px;
+}
+
+.pokemon-name {
+  color: gray;
+  text-decoration: underline;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  border: none;
+  border-radius: 4px;
+  background-color: lightslategray;
+  color: white;
+  padding: 16px;
+}
+
+.image {
+  height: 240px;
+  width: 240px;
 }
