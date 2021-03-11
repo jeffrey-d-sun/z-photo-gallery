@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from './components'
+import { Button, Gallery } from './components'
 import './App.css';
 
 class App extends React.Component {
@@ -26,9 +26,11 @@ class App extends React.Component {
       .then(res => res.json())
       .then(({ height, weight, types, id }) => {
         details.id = id
-        details.height = height
-        details.weight = weight
-        details.types = types.map(({ type: { name }}) => name)
+        details.stats = {
+          height,
+          weight,
+          types: types.map(({ type: { name }}) => name)
+        }
         return details
       })
   }
@@ -62,18 +64,15 @@ class App extends React.Component {
 
   render() {
     const { pokemons, index, gallery } = this.state
-    const pokemonName = pokemons[index]?.name
-    const pokemonImgSrc = gallery[index]
+    const pokemon = pokemons[index]
+    const imgSrc = gallery[index]
     const isFirst = index === 0
     const isLast = index === gallery.length - 1
 
     return (
-      <main>
+      <main className="main">
         <Button label='previous' type='prev' isDisabled={isFirst} handleClick={this.handleClick} />
-        <div className="gallery-container">
-          <h2>{pokemonName}</h2>
-          <img src={pokemonImgSrc} alt={`${pokemonName}`} />
-        </div>
+        {pokemon && (<Gallery pokemon={pokemon} imgSrc={imgSrc} />)}
         <Button label='next' type='next' isDisabled={isLast} handleClick={this.handleClick} />
       </main>
     );
