@@ -46,3 +46,13 @@ button {
   height: 240px;
   width: 240px;
 }
+
+.learn-more {
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid white;
+  background-color: lightslategray;
+  color: white;
+  border-radius: 4px;
+}
